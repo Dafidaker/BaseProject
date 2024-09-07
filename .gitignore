@@ -1,0 +1,21 @@
+# Ignore everything
+*
+
+# Don't ignore the .gitignore itself
+!.gitignore
+
+# Allow the Assets folder
+!/Assets
+
+# Allow all files inside the Assets folder
+!/Assets/**
+
+# Ignore the rest of the folders
+Library/
+Logs/
+obj/
+Temp/
+Packages/
+ProjectSettings/
+UserSettings/
+.idea/
