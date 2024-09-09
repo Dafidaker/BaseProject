@@ -15,6 +15,8 @@ public class TransitionSceneManager : Singleton<TransitionSceneManager>
     
     public void FadeToScene(string sceneName,float fadeDuration = 1.0f)
     {
+        ActivateDontDestroyOnLoad();
+        
         _fadeDuration = fadeDuration;
 
         if (!_isInitialized)  Initialize(); 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Utility.UI
@@ -16,8 +17,7 @@ namespace Utility.UI
 
         private void OnClick()
         {
-            _button.interactable = false; 
-            _button.interactable = true; 
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
 }
