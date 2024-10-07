@@ -5714,8 +5714,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09cd90663c44b3441b3919444e90af86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 0}
-  text: {fileID: 0}
+  button: {fileID: 734772138}
+  text: {fileID: 816833670}
   ButtonStates:
   - State: 1
     UseState: 1
@@ -5729,15 +5729,16 @@ MonoBehaviour:
         - m_Target: {fileID: 734772141}
           m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
           m_MethodName: ScaleUp
-          m_Mode: 0
+          m_Mode: 4
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
-            m_FloatArgument: 0
+            m_FloatArgument: 1.5
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    AnimationToDo: {fileID: 0}
   - State: 0
     UseState: 1
     AlterTextColor: 1
@@ -5747,6 +5748,7 @@ MonoBehaviour:
     FAction:
       m_PersistentCalls:
         m_Calls: []
+    AnimationToDo: {fileID: 0}
 --- !u!1 &746643373
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,9 +29,7 @@ struct StateEditor
     public bool AlterTextColor;
     public Color TextColor;
 
-    public bool AlterScale;
-    public bool LoopAnimation;
-    public UnityEvent<bool> FAction;
+    public ButtonAnimationBase AnimationToDo;
 }
 
 public class ButtonController : MonoBehaviour,
@@ -45,13 +43,13 @@ public class ButtonController : MonoBehaviour,
     private bool _mouseIsHovering;
 
     [SerializeField] private List<StateEditor> ButtonStates;
-    private RectTransform _initialTransform;
+    public RectTransform InitialTransform { get; private set; }
     
-   private StateEditor[] _stateEditors;
+    private StateEditor[] _stateEditors;
    
     private void Awake()
     {
-        _initialTransform = TransformUtil.CreateStandaloneRectTransform(gameObject.GetComponent<RectTransform>());
+        InitialTransform = TransformUtil.CreateStandaloneRectTransform(gameObject.GetComponent<RectTransform>());
         if(button == null) button = GetComponent<Button>();
         if(text == null) text = GetComponentInChildren<TextMeshProUGUI>();
         _buttonState = ButtonState.Normal;
@@ -123,17 +121,13 @@ public class ButtonController : MonoBehaviour,
     {
         StopAndResetTween();
         var editorState = GetEditor(_buttonState);
-        if (!editorState.UseState || editorState is { AlterScale: false, AlterTextColor: false })  return;
+        var animationExists = editorState.AnimationToDo != null;
+        
+        if (!editorState.UseState || (editorState.AlterTextColor == false && !animationExists))  return;
 
-        if (editorState.AlterScale)
-        {
-            editorState.FAction.Invoke(editorState.LoopAnimation);
-        }
-
-        if (editorState.AlterTextColor && text != null)
-        {
-            text.color = editorState.TextColor;
-        }
+        if (animationExists) editorState.AnimationToDo.CallAnimation(this);
+        
+        if (editorState.AlterTextColor && text != null) text.color = editorState.TextColor;
     }
 
 
@@ -164,14 +158,15 @@ public class ButtonController : MonoBehaviour,
             });
     }
     
-    public void ScaleUp(bool loop)
+    public void ScaleUp(float increaseBy)
     {
-        transform.DOScale(1.5f, 1f).SetEase(Ease.InOutSine); 
+        Vector3 targetScale = button.transform.localScale + new Vector3(increaseBy,increaseBy,increaseBy);
+        transform.DOScale(targetScale, 1f).SetEase(Ease.InOutSine); 
     }
 
     private void StopAndResetTween()
     {
         transform.DOKill();
-        TransformUtil.CopyTransformData(_initialTransform,transform);
+        TransformUtil.CopyTransformData(InitialTransform,transform);
     }
 }
